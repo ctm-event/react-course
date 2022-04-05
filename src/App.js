@@ -3,7 +3,7 @@ import Expenses from './components/Expenses/Expenses';
 import NewExpense from './components/NewExpense/NewExpense';
 
 function App() {
-  const expenses = [
+  const baseExpenses = [
     {
       id: '01',
       title: 'Car Insurance',
@@ -36,17 +36,18 @@ function App() {
     }
   ];
 
-  const [expenseData, setExpenseData] = useState(expenses);
+  const [expenses, setExpenses] = useState(baseExpenses);
 
   const addExpenseHandler = (expenseData) => {
-    expenses.unshift(expenseData);
-    setExpenseData(expenses);
+    setExpenses(prevExpenses => {
+      return [expenseData, ...prevExpenses];
+    });
   }
 
   return (
     <div>
       <NewExpense onAddExpense={addExpenseHandler}  />
-      <Expenses expenses={expenseData} />
+      <Expenses expenses={expenses} />
     </div>
   );
 }
